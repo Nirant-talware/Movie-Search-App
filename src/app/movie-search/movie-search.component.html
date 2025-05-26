@@ -1,0 +1,22 @@
+<div class="app-container">
+    <h1>Movie Search App</h1>
+    <div class="input-container">
+      <input type="text" id="movie-search" [(ngModel)]="movieSearchTerm" placeholder="Enter movie name..." (input)="onSearchTermChange()" (keypress)="onEnterPress($event)" />
+      <button id="clear-btn" (click)="clearSearch()" *ngIf="movieSearchTerm">×</button>
+    </div>
+    <button id="search-btn" (click)="searchMovie()" [disabled]="!movieSearchTerm">Search</button>
+    <div id="error-message" *ngIf="errorMessage" style="color: red">{{ errorMessage }}</div>
+    <div id="movie-details">
+      <div *ngFor="let movie of movies" class="movie-card">
+        <img [src]="movie.Poster === 'N/A' ? errorImg : movie.Poster" alt="{{ movie.Title }}" />
+        <h3>{{ movie.Title }} ({{ movie.Year }})</h3>
+        <button (click)="saveToFavorites(movie.imdbID)">Save to Favorites</button>
+      </div>
+    </div>
+    <button id="load-more-btn" (click)="loadMoreMovies()" *ngIf="showLoadMoreBtn">Load More</button>
+  </div>
+  
+  <div id="loader" *ngIf="isLoading">
+    <div class="spinner"></div>
+  </div>
+  
